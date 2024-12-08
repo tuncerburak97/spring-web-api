@@ -14,9 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class TrainClient {
 
-
-    @PostConstruct
-    public void sendRequest(){
+    public String sendRequest(){
         String url = "https://cdn-api-prod-ytp.tcddtasimacilik.gov.tr/datas/station-pairs-INTERNET.json?environment=dev&userId=1";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Unit-Id", "3895");
@@ -32,8 +30,10 @@ public class TrainClient {
         try {
             ResponseEntity<String> response = restTemplate.getForEntity(url, String.class, entity);
             log.info(response.getBody());
+            return response.getBody();
         }catch (Exception e) {
             log.error(e.getMessage());
+            return e.getMessage();
         }
     }
 
